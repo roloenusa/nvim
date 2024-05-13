@@ -14,7 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup(
     {
         { import = "roloenusa.plugins" },
-        { import = "roloenusa.plugins.lsp" }
     },
     {
         checker = {

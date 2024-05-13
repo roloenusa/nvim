@@ -7,7 +7,7 @@ return {
         config = function()
             vim.cmd([[colorscheme nightfly]])
         end
-    }, { 
+    }, {
         "catppuccin/nvim",
         name = "catppuccin",
         priority = 1000,

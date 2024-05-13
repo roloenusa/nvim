@@ -72,3 +72,11 @@ vim.g.netrw_winsize = 25
 
 -- Cursor line
 vim.opt.cursorline = true
+
+-- Remove trailing whitespace on save while keeping cursor position
+vim.cmd[[
+  autocmd BufWritePre * let save_cursor = getpos('.')
+  autocmd BufWritePre * :%s/\s\+$//e
+  autocmd BufWritePost * call setpos('.', save_cursor)
+]]
+
