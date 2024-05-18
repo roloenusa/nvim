@@ -12,7 +12,7 @@ vim.g.maplocalleader = ' '
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
 -- Set 'jk' as alternative escape mode
-vim.keymap.set('i', 'jk', '<Esc>')
+vim.keymap.set('i', 'jj', '<Esc>')
 
 -- Move text when higlighted
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
