@@ -19,6 +19,7 @@ return {
     -- :bp -- previous
     -- :bn -- next
     -- :b# -- jump to buffer
+    -- :bd# -- delete buffer
     -- vim.api.nvim_set_keymap('n', '<Tab>', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
     -- vim.api.nvim_set_keymap('n', '<S-Tab>', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
   end
