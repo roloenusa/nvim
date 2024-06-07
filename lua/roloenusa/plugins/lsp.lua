@@ -105,7 +105,6 @@ return {
         end,
         ['rust_analyzer'] = function ()
           require('lspconfig').rust_analyzer.setup {
-            capabilities = capabilities,
             settings = {
               ['rust-analyzer'] = {
                 cargo = {
