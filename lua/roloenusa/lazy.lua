@@ -12,16 +12,20 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup(
-    {
-        { import = "roloenusa.plugins" },
+  {
+    { import = "roloenusa.plugins" },
+  },
+  {
+    install = {
+      -- try to load one of these colorschemes when starting an installation during startup
+      colorscheme = { "nightfly" },
     },
-    {
-        checker = {
-            enabled = true,
-            notify = false,
-        },
-        change_detection = {
-            notify = false,
-        }
+    checker = {
+      enabled = true,
+      notify = false,
+    },
+    change_detection = {
+      notify = false,
     }
+  }
 )
