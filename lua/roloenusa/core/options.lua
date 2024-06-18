@@ -80,3 +80,17 @@ vim.cmd[[
   autocmd BufWritePost * call setpos('.', save_cursor)
 ]]
 
+-- Ensure there is an empty line at the end of every file
+function newline()
+    local current_line = vim.api.nvim_buf_get_lines(0, -2, -1, false)[1]
+    if current_line ~= '' then
+      vim.api.nvim_buf_set_lines(0, -1, -1, false, {''})
+    end
+end
+
+vim.cmd([[
+  augroup jd_new_line
+    autocmd!
+    autocmd BufWritePre * lua newline()
+  augroup END
+]])
