@@ -3,8 +3,15 @@ return {
   requires = 'nvim-tree/nvim-web-devicons', -- Optional, for file icons
   config = function()
     require('bufferline').setup {
+      highlights = {
+        buffer_selected = {
+          fg = '#ecc48d',
+          bold = false,
+        },
+      },
+
       options = {
-        numbers = "both", -- Shows buffer index and number
+        numbers = "buffer_id", -- Shows buffer index and number
         diagnostics = "nvim_lsp", -- Show LSP diagnostics in the bufferline
         show_buffer_close_icons = false,
         show_close_icon = false,
@@ -24,4 +31,3 @@ return {
     -- vim.api.nvim_set_keymap('n', '<S-Tab>', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
   end
 }
-
