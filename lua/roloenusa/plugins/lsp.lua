@@ -3,6 +3,7 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
@@ -64,6 +65,9 @@ return {
 
         opts.desc = "Restart LSP"
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+        opts = { buffer = ev.buf }
+        keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
       end,
     })
     local capabilities = vim.tbl_deep_extend(
@@ -73,17 +77,21 @@ return {
       cmp_lsp.default_capabilities())
 
     require("fidget").setup({})
-    require("mason").setup()
-    require("mason-lspconfig").setup({
+    require("mason").setup({})
+    require("mason-tool-installer").setup({
       ensure_installed = {
+        "prettier",
         "html",
         "lua_ls",
         "rust_analyzer",
         "gopls",
-      },
+        "typescript-language-server",
+        "eslint-lsp",
+      }
+    })
+    require("mason-lspconfig").setup({
       handlers = {
         function(server_name) -- default handler (optional)
-
           require("lspconfig")[server_name].setup {
             capabilities = capabilities
           }
@@ -97,12 +105,13 @@ return {
               Lua = {
                 runtime = { version = "Lua 5.1" },
                 diagnostics = {
-                  globals = { "vim", "it", "describe", "before_each", "after_each" },
-                }
+                  globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
+                },
               }
             }
           }
         end,
+
         ['rust_analyzer'] = function ()
           require('lspconfig').rust_analyzer.setup {
             settings = {
@@ -129,8 +138,8 @@ return {
         end,
       },
       mapping = cmp.mapping.preset.insert({
-        ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-        ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+        ["<C-k>"] = cmp.mapping.select_prev_item(cmp_select), -- previous suggestion
+        ["<C-j>"] = cmp.mapping.select_next_item(cmp_select), -- next suggestion
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
@@ -160,3 +169,4 @@ return {
     })
   end
 }
+

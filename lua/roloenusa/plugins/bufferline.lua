@@ -2,6 +2,7 @@ return {
   'akinsho/bufferline.nvim',
   requires = 'nvim-tree/nvim-web-devicons', -- Optional, for file icons
   config = function()
+    local bg_tab_color = "#1d3b53"
     require('bufferline').setup {
       highlights = {
         buffer_selected = {
@@ -27,7 +28,8 @@ return {
     -- :bn -- next
     -- :b# -- jump to buffer
     -- :bd# -- delete buffer
-    -- vim.api.nvim_set_keymap('n', '<Tab>', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
-    -- vim.api.nvim_set_keymap('n', '<S-Tab>', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', '<Tab>', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', '<S-Tab>', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
   end
 }
+

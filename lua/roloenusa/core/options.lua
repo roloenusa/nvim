@@ -94,3 +94,4 @@ vim.cmd([[
     autocmd BufWritePre * lua newline()
   augroup END
 ]])
+

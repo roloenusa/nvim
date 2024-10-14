@@ -9,7 +9,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Return to the file explorer
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = '[P]roject [V]iew tree'})
 
 -- Set 'jk' as alternative escape mode
 vim.keymap.set('i', 'jj', '<Esc>')
@@ -33,3 +33,4 @@ vim.keymap.set('v', '<leader>d', "\"_d")
 
 -- Replace in place for the highlighted word
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+
