@@ -1,3 +1,6 @@
+--[[
+-- provides tabs at the top of the screen. It makes navigation easier
+--]]
 return {
   'akinsho/bufferline.nvim',
   requires = 'nvim-tree/nvim-web-devicons', -- Optional, for file icons
@@ -8,6 +11,12 @@ return {
         buffer_selected = {
           fg = '#ecc48d',
           bold = false,
+        },
+        separator = {
+          fg = bg_tab_color,
+        },
+        separator_selected = {
+          fg = bg_tab_color,
         },
       },
 
