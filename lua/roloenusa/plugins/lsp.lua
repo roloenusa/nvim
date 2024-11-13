@@ -12,6 +12,7 @@ return {
     "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip",
     "j-hui/fidget.nvim",
+    "onsails/lspkind.nvim",
   },
 
   config = function()
@@ -62,6 +63,7 @@ return {
 
         opts.desc = "Show documentation for what is under cursor"
         keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+        keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
 
         opts.desc = "Restart LSP"
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
@@ -130,6 +132,7 @@ return {
     })
 
     local cmp_select = { behavior = cmp.SelectBehavior.Select }
+    local lspkind = require('lspkind')
 
     cmp.setup({
       snippet = {
@@ -153,7 +156,22 @@ return {
         }, {
           { name = 'buffer' },
         }
-      )
+      ),
+
+      -- Format the box for the snippets
+      formatting = {
+        format = lspkind.cmp_format({
+          mode = 'symbol_text',  -- Show both icon and text
+          maxwidth = 50,         -- Truncate if too wide
+          ellipsis_char = '...', -- Ellipsis for long items
+          show_labelDetails = true,
+        })
+      },
+
+      window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+      },
     })
 
     vim.diagnostic.config({
@@ -167,6 +185,16 @@ return {
         prefix = "",
       },
     })
-  end
+
+    -- Border color for LSP
+    vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#417aa8', bg = '#011627' }) -- For floating windows
+
+    -- Display the border to make text a bit more readable.
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+      vim.lsp.handlers.hover,
+      {
+        border = "rounded" -- or "single", "double", "shadow"
+      }
+    ) end
 }
 
