@@ -99,6 +99,33 @@ return {
           }
         end,
 
+        ["ts_ls"] = function()
+          local lspconfig = require("lspconfig")
+          lspconfig.ts_ls.setup({
+            capabilities = capabilities,
+            settings = {
+              typescript = {
+                preferences = {
+                  importModuleSpecifierPreference = "relative",
+                  importModuleSpecifierEnding = "minimal",
+                }
+              },
+              javascript = {
+                preferences = {
+                  importModuleSpecifierPreference = "relative",
+                  importModuleSpecifierEnding = "minimal",
+                }
+              }
+            },
+            init_options = {
+              preferences = {
+                importModuleSpecifierPreference = "relative",
+                importModuleSpecifierEnding = "minimal",
+              }
+            }
+          })
+        end,
+
         ["lua_ls"] = function()
           local lspconfig = require("lspconfig")
           lspconfig.lua_ls.setup {
