@@ -214,7 +214,8 @@ return {
     })
 
     -- Border color for LSP
-    vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#417aa8', bg = '#011627' }) -- For floating windows
+    vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#417aa8', bg = '#011627' }) -- Border for floating windows
+    vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#02121f'}) -- Body for selection in floats
 
     -- Display the border to make text a bit more readable.
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
@@ -222,6 +223,8 @@ return {
       {
         border = "rounded" -- or "single", "double", "shadow"
       }
-    ) end
+    )
+
+  end
 }
 
