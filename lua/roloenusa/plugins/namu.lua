@@ -5,7 +5,39 @@ return {
       -- Enable the modules you want
       namu_symbols = {
         enable = true,
-        options = {}, -- here you can configure namu
+        options = {
+          movement = {
+            next = { "<C-j>", "<DOWN>" }, -- Support multiple keys
+            previous = { "<C-k>", "<UP>" }, -- Support multiple keys
+            close = { "<ESC>" }, -- close mapping
+            select = { "<CR>" }, -- select mapping
+            delete_word = {}, -- delete word mapping
+            clear_line = {}, -- clear line mapping
+          },
+          AllowKinds = {
+            -- default = {
+            --   "Function",
+            --   "Method",
+            --   "Class",
+            --   "Module",
+            --   -- "Property",
+            --   -- "Variable",
+            --   -- "Constant",
+            --   "Enum",
+            --   "Interface",
+            --   "Field",
+            --   "Struct",
+            -- },
+            typescript = {
+              "Method",
+              "Class",
+              "Module",
+              "Enum",
+              "Interface",
+              "Field",
+            }
+          },
+        }, -- here you can configure namu
       },
       -- Optional: Enable other modules if needed
       ui_select = { enable = false }, -- vim.ui.select() wrapper
@@ -29,5 +61,4 @@ return {
     })
   end,
 }
-
 

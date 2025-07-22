@@ -34,3 +34,9 @@ vim.keymap.set('v', '<leader>d', "\"_d", { desc = 'Delete but keep original buff
 -- Replace in place for the highlighted word
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Highlight and replace interactive' })
 
+-- Splits navigation
+vim.keymap.set("n", "<C-h>", "<C-w>h", { noremap = true })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { noremap = true })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { noremap = true })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true })
+

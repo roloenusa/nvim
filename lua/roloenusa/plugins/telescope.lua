@@ -30,6 +30,7 @@ return {
     vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = '[P]roject [F]iles' })
     vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = 'Find files tracked by git' })
     vim.keymap.set('n', '<leader>pb', ':Telescope buffers<CR>', { desc = '[P]roject [B]uffers', noremap = true, silent = true })
+    vim.keymap.set('n', '<leader>pr', builtin.resume, { desc = '[P]roject [R]esume telesccope' })
     vim.keymap.set('n', '<leader>ps', function()
       builtin.grep_string({ search = vim.fn.input("Grep > ") })
     end,
