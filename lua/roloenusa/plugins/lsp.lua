@@ -78,7 +78,13 @@ return {
       vim.lsp.protocol.make_client_capabilities(),
       cmp_lsp.default_capabilities())
 
-    require("fidget").setup({})
+    -- Configure fidget for LSP progress notifications
+    require("fidget").setup({
+      notification = {
+        override_vim_notify = false,
+      },
+    })
+
     require("mason").setup({})
     require("mason-tool-installer").setup({
       ensure_installed = {
@@ -99,9 +105,9 @@ return {
           }
         end,
 
+        -- TypeScript/JavaScript LSP
         ["ts_ls"] = function()
-          local lspconfig = require("lspconfig")
-          lspconfig.ts_ls.setup({
+          require("lspconfig").ts_ls.setup({
             capabilities = capabilities,
             settings = {
               typescript = {
@@ -126,9 +132,9 @@ return {
           })
         end,
 
+        -- Lua LSP
         ["lua_ls"] = function()
-          local lspconfig = require("lspconfig")
-          lspconfig.lua_ls.setup {
+          require("lspconfig").lua_ls.setup({
             capabilities = capabilities,
             settings = {
               Lua = {
@@ -138,22 +144,24 @@ return {
                 },
               }
             }
-          }
+          })
         end,
 
-        ['rust_analyzer'] = function ()
-          require('lspconfig').rust_analyzer.setup {
+        -- Rust LSP
+        ["rust_analyzer"] = function()
+          require("lspconfig").rust_analyzer.setup({
+            capabilities = capabilities,
             settings = {
-              ['rust-analyzer'] = {
+              ["rust-analyzer"] = {
                 cargo = {
                   allFeatures = true,
                 },
                 checkOnSave = {
-                  command = 'clippy',
+                  command = "clippy",
                 },
               }
             }
-          }
+          })
         end,
       }
     })
@@ -218,12 +226,14 @@ return {
     vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#02121f'}) -- Body for selection in floats
 
     -- Display the border to make text a bit more readable.
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-      vim.lsp.handlers.hover,
-      {
-        border = "rounded" -- or "single", "double", "shadow"
-      }
-    )
+    local original_open_floating_preview = vim.lsp.util.open_floating_preview
+    vim.lsp.util.open_floating_preview = function(contents, syntax, opts)
+      opts = opts or {}
+      opts.border = "rounded"
+      opts.max_width = opts.max_width or 80
+      opts.max_height = opts.max_height or 20
+      return original_open_floating_preview(contents, syntax, opts)
+    end
 
   end
 }
