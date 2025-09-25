@@ -209,21 +209,21 @@ return {
       },
     })
 
-    vim.diagnostic.config({
-      -- update_in_insert = true,
-      float = {
-        focusable = false,
-        style = "minimal",
-        border = "rounded",
-        source = "always",
-        header = "",
-        prefix = "",
-      },
-    })
+    -- vim.diagnostic.config({
+    --   -- update_in_insert = true,
+    --   float = {
+    --     focusable = false,
+    --     style = "minimal",
+    --     border = "rounded",
+    --     source = "always",
+    --     header = "",
+    --     prefix = "",
+    --   },
+    -- })
 
     -- Border color for LSP
-    vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#417aa8', bg = '#011627' }) -- Border for floating windows
-    vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#02121f'}) -- Body for selection in floats
+    -- vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#417aa8', bg = '#011627' }) -- Border for floating windows
+    -- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#02121f'}) -- Body for selection in floats
 
     -- Display the border to make text a bit more readable.
     local original_open_floating_preview = vim.lsp.util.open_floating_preview
