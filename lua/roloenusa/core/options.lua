@@ -63,7 +63,7 @@ vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 
 -- Color the columns at a certain length.
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "80,120"
 
 -- Tree browser
 vim.g.netrw_browse_split = 0

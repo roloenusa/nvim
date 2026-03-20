@@ -20,6 +20,26 @@ return {
     local cmp_lsp = require("cmp_nvim_lsp")
 
     local keymap = vim.keymap -- for conciseness
+
+    keymap.set("n", "<leader>rs", function()
+      local clients = vim.lsp.get_clients({ bufnr = 0 })
+      if #clients == 0 then
+        vim.notify("No LSP clients attached", vim.log.levels.WARN)
+        return
+      end
+
+      for _, client in ipairs(clients) do
+        vim.notify("Stopping LSP client: " .. client.name)
+        vim.lsp.stop_client(client.id, true)
+      end
+
+      vim.defer_fn(function()
+        vim.cmd("edit") -- reload buffer to trigger LSP reattach
+        vim.notify("LSP restarted", vim.log.levels.INFO)
+      end, 300)
+    end, { desc = "Restart current buffer’s LSP", silent = true })
+
+
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("UserLspConfig", {}),
       callback = function(ev)
@@ -65,8 +85,8 @@ return {
         keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
         keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
 
-        opts.desc = "Restart LSP"
-        keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+        -- opts.desc = "Restart LSP"
+        -- keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 
         opts = { buffer = ev.buf }
         keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
@@ -237,4 +257,3 @@ return {
 
   end
 }
-

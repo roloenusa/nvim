@@ -42,6 +42,22 @@ return {
     --     vim.cmd([[colorscheme catppuccin]])
     -- end
   },
+  {
+    dir = "~/projects/personal/colorgen-nvim/onedarker",
+    name = "onedarker",
+    priority = 1000,
+    -- config = function()
+    --     vim.cmd([[colorscheme onedarker]])
+    -- end
+  },
+  {
+    dir = "~/projects/personal/colorgen-nvim/dessert-fox",
+    name = "dessert-fox",
+    priority = 1000,
+    -- config = function()
+    --     vim.cmd([[colorscheme dessert-fox]])
+    -- end
+  },
 }
 
 
