@@ -37,10 +37,15 @@ return {
   },
   config = function()
     local wk = require("which-key")
-    wk.add(
-      { '<leader>h', group = '[H]arpoon' },
-      { '<leader>p', group = '[p]roject Ops' }
-    )
+    wk.add({
+      { '<leader>h', group = 'Harpoon' },
+      { '<leader>p', group = 'Project' },
+      { '<leader>c', group = 'Code' },
+      { '<leader>r', group = 'Rename/Restart' },
+      { '<leader>t', group = 'Toggle' },
+      { '<leader>v', group = 'Vim/LSP' },
+      { '<leader>b', group = 'Buffer' },
+    })
   end
 }
 

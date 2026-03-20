@@ -1,5 +1,6 @@
 return {
   "neovim/nvim-lspconfig",
+  lazy = false,
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
@@ -90,13 +91,28 @@ return {
 
         opts = { buffer = ev.buf }
         keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+
+        -- Enable inlay hints if supported
+        if vim.lsp.inlay_hint then
+          vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
+          opts.desc = "Toggle inlay hints"
+          keymap.set('n', '<leader>th', function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = ev.buf }), { bufnr = ev.buf })
+          end, opts)
+        end
       end,
     })
     local capabilities = vim.tbl_deep_extend(
       "force",
-      {},
       vim.lsp.protocol.make_client_capabilities(),
-      cmp_lsp.default_capabilities())
+      cmp_lsp.default_capabilities()
+    )
+
+    -- Enhanced snippet support
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.resolveSupport = {
+      properties = { 'documentation', 'detail', 'additionalTextEdits' }
+    }
 
     -- Configure fidget for LSP progress notifications
     require("fidget").setup({
@@ -104,6 +120,36 @@ return {
         override_vim_notify = false,
       },
     })
+
+    -- Configure better diagnostics
+    vim.diagnostic.config({
+      virtual_text = {
+        source = "if_many",  -- Show source if multiple diagnostics
+        prefix = '●',        -- Could be '■', '▎', etc.
+      },
+      signs = true,
+      underline = true,
+      update_in_insert = false,  -- Don't update while typing
+      severity_sort = true,      -- Show errors first
+      float = {
+        focusable = false,
+        style = "minimal",
+        border = "rounded",
+        source = "if_many",
+        header = "",
+        prefix = "",
+        format = function(diagnostic)
+          return string.format("%s: %s", diagnostic.source or "LSP", diagnostic.message)
+        end,
+      },
+    })
+
+    -- Modern sign configuration
+    local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+    for type, icon in pairs(signs) do
+      local hl = "DiagnosticSign" .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+    end
 
     require("mason").setup({})
     require("mason-tool-installer").setup({
@@ -228,22 +274,6 @@ return {
         documentation = cmp.config.window.bordered(),
       },
     })
-
-    -- vim.diagnostic.config({
-    --   -- update_in_insert = true,
-    --   float = {
-    --     focusable = false,
-    --     style = "minimal",
-    --     border = "rounded",
-    --     source = "always",
-    --     header = "",
-    --     prefix = "",
-    --   },
-    -- })
-
-    -- Border color for LSP
-    -- vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#417aa8', bg = '#011627' }) -- Border for floating windows
-    -- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#02121f'}) -- Body for selection in floats
 
     -- Display the border to make text a bit more readable.
     local original_open_floating_preview = vim.lsp.util.open_floating_preview

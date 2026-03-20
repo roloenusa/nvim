@@ -1,6 +1,6 @@
 return {
-  'nvim-telescope/telescope.nvim', tag = '0.1.6',
-  -- or                              , branch = '0.1.x',
+  'nvim-telescope/telescope.nvim',
+  branch = '0.1.x',
 
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -27,14 +27,14 @@ return {
     local builtin = require('telescope.builtin')
 
 
-    vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = '[P]roject [F]iles' })
-    vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = 'Find files tracked by git' })
-    vim.keymap.set('n', '<leader>pb', ':Telescope buffers<CR>', { desc = '[P]roject [B]uffers', noremap = true, silent = true })
-    vim.keymap.set('n', '<leader>pr', builtin.resume, { desc = '[P]roject [R]esume telesccope' })
+    vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = 'Project: Find files' })
+    vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = 'Project: Git files' })
+    vim.keymap.set('n', '<leader>pb', ':Telescope buffers<CR>', { desc = 'Project: Buffers', noremap = true, silent = true })
+    vim.keymap.set('n', '<leader>pr', builtin.resume, { desc = 'Project: Resume telescope' })
     vim.keymap.set('n', '<leader>ps', function()
       builtin.grep_string({ search = vim.fn.input("Grep > ") })
     end,
-      { desc = '[P]roject [S]earch via grep'})
+      { desc = 'Project: Search via grep'})
   end
 }
 

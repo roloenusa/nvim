@@ -1,10 +1,37 @@
 return {
   'nvim-mini/mini.files',
   version = false,
+  lazy = true,
 
   config = function()
     -- using the mini plugins
-    require('mini.files').setup()
+    local MiniFiles = require('mini.files')
+    MiniFiles.setup({
+      -- Don't auto-open, only open when explicitly called
+      mappings = {
+        close       = 'q',
+        go_in       = 'l',
+        go_in_plus  = 'L',
+        go_out      = 'h',
+        go_out_plus = 'H',
+        reset       = '<BS>',
+        reveal_cwd  = '@',
+        show_help   = 'g?',
+        synchronize = '=',
+        trim_left   = '<',
+        trim_right  = '>',
+      },
+      options = {
+        -- Whether to use for editing directories
+        use_as_default_explorer = false,
+      },
+      windows = {
+        preview = true,
+        width_focus = 50,
+        width_nofocus = 15,
+        width_preview = 50,
+      },
+    })
 
     -- Window width based on the offset from the center, i.e. center window
     -- is 60, then next over is 20, then the rest are 10.
@@ -45,10 +72,10 @@ return {
     end
 
     vim.api.nvim_create_autocmd("User", {pattern = "MiniFilesWindowUpdate", callback=ensure_center_layout})
+  end,
 
-    -- Keymap to open mini.files
-    local opts = { silent = true }
-    opts.desc = "[P]roject [F]iles using mini.files"
-    vim.keymap.set("n", "<leader>pF", "<cmd>lua MiniFiles.open()<CR>", opts)
-  end
+  keys = {
+    { "<leader>e", function() require('mini.files').open() end, desc = "File Explorer" },
+    { "<leader>pF", function() require('mini.files').open() end, desc = "Project: Files (mini.files)" },
+  }
 }
