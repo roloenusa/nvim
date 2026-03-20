@@ -9,16 +9,17 @@ require("roloenusa.core")
 require('roloenusa.languages')
 require("roloenusa.lazy")
 
+-- Colorscheme reload function for development/testing
 function _G.ReloadColorscheme(name)
   name = name or "dessert-fox"
-  -- Clear it from package.loaded so changes are picked up
+  -- Clear from package.loaded so changes are picked up
   package.loaded["colors." .. name] = nil
   vim.cmd("colorscheme " .. name)
-  vim.cmd("Lazy reload dessert-fox")
+  vim.cmd("Lazy reload " .. name)
   print("Reloaded colorscheme: " .. name)
 end
 
 vim.keymap.set("n", "<leader>rc", function()
   ReloadColorscheme("dessert-fox")
-end, { desc = "Reload colorscheme" })
+end, { desc = "Reload: Colorscheme (dessert-fox)" })
 

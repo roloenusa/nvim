@@ -1,12 +1,12 @@
 --[[
--- provides tabs at the top of the screen. It makes navigation easier
---]]
+  Buffer tabs at the top of the screen for easier navigation
+]]--
 return {
   'akinsho/bufferline.nvim',
-  requires = 'nvim-tree/nvim-web-devicons', -- Optional, for file icons
+  dependencies = 'echasnovski/mini.icons',
   config = function()
     local bg_tab_color = "#1d3b53"
-    require('bufferline').setup {
+    require('bufferline').setup({
       highlights = {
         buffer_selected = {
           fg = '#ecc48d',
@@ -19,26 +19,19 @@ return {
           fg = bg_tab_color,
         },
       },
-
       options = {
-        numbers = "buffer_id", -- Shows buffer index and number
-        diagnostics = "nvim_lsp", -- Show LSP diagnostics in the bufferline
+        numbers = "buffer_id",
+        diagnostics = "nvim_lsp",
         show_buffer_close_icons = false,
         show_close_icon = false,
-        separator_style = "slant", -- Or "thick", "thin", etc.
+        separator_style = "slant",
         always_show_bufferline = true,
       },
-    }
+    })
 
-    -- Keybindings to navigate between buffers
-    -- Ommitting this for now so i can better learn the buffer navigation:
-    -- :ls -- List all buffers
-    -- :bp -- previous
-    -- :bn -- next
-    -- :b# -- jump to buffer
-    -- :bd# -- delete buffer
-    vim.api.nvim_set_keymap('n', '<Tab>', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
-    vim.api.nvim_set_keymap('n', '<S-Tab>', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
+    -- Buffer navigation
+    vim.keymap.set('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>', { desc = 'Next buffer' })
+    vim.keymap.set('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>', { desc = 'Previous buffer' })
   end
 }
 

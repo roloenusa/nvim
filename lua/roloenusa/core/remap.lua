@@ -34,9 +34,10 @@ vim.keymap.set('v', '<leader>d', "\"_d", { desc = 'Delete: Keep original buffer'
 -- Replace in place for the highlighted word
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Search: Replace word under cursor' })
 
--- Splits navigation
-vim.keymap.set("n", "<C-h>", "<C-w>h", { noremap = true })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { noremap = true })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { noremap = true })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true })
+-- Split navigation - Fallback if tmux-navigator doesn't load
+-- tmux-navigator plugin will override these when it loads
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Navigate: Left" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Navigate: Down" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Navigate: Up" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Navigate: Right" })
 

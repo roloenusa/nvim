@@ -95,8 +95,8 @@ return {
         -- Enable inlay hints if supported
         if vim.lsp.inlay_hint then
           vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
-          opts.desc = "Toggle inlay hints"
-          keymap.set('n', '<leader>th', function()
+          opts.desc = "Toggle: Inlay hints"
+          keymap.set('n', '<leader>ti', function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = ev.buf }), { bufnr = ev.buf })
           end, opts)
         end
@@ -121,16 +121,12 @@ return {
       },
     })
 
-    -- Configure better diagnostics
+    -- Configure diagnostics (virtual_text disabled - using tiny-inline-diagnostic)
     vim.diagnostic.config({
-      virtual_text = {
-        source = "if_many",  -- Show source if multiple diagnostics
-        prefix = '●',        -- Could be '■', '▎', etc.
-      },
       signs = true,
       underline = true,
-      update_in_insert = false,  -- Don't update while typing
-      severity_sort = true,      -- Show errors first
+      update_in_insert = false,
+      severity_sort = true,
       float = {
         focusable = false,
         style = "minimal",
@@ -144,7 +140,7 @@ return {
       },
     })
 
-    -- Modern sign configuration
+    -- Modern diagnostic signs
     local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
     for type, icon in pairs(signs) do
       local hl = "DiagnosticSign" .. type

@@ -1,4 +1,8 @@
+--[[
+  GitHub Copilot integration
+]]--
 return {
-  "github/copilot.vim"
+  "github/copilot.vim",
+  event = "InsertEnter",
 }
 

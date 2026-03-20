@@ -1,3 +1,7 @@
+--[[
+  Seamless navigation between tmux panes and vim splits
+  <C-h/j/k/l> for directional movement
+]]--
 return {
   "christoomey/vim-tmux-navigator",
   cmd = {
@@ -8,10 +12,10 @@ return {
     "TmuxNavigatePrevious",
   },
   keys = {
-    { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-    { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-    { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-    { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-    { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+    { "<C-h>", "<cmd><C-U>TmuxNavigateLeft<cr>", desc = "Navigate: Left" },
+    { "<C-j>", "<cmd><C-U>TmuxNavigateDown<cr>", desc = "Navigate: Down" },
+    { "<C-k>", "<cmd><C-U>TmuxNavigateUp<cr>", desc = "Navigate: Up" },
+    { "<C-l>", "<cmd><C-U>TmuxNavigateRight<cr>", desc = "Navigate: Right" },
+    { "<C-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>", desc = "Navigate: Previous" },
   },
 }
