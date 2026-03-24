@@ -21,7 +21,7 @@ vim.opt.breakindent = true
 -- Save undo history
 vim.opt.undofile = true
 
--- Sets how newvim will display certain whitespace character in the editor.
+-- Sets how Neovim will display certain whitespace characters in the editor.
 -- See `:help 'list'`
 -- and `:help 'listchars'`
 vim.opt.list = true
@@ -126,15 +126,17 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   callback = ensure_final_newline,
 })
 
--- Add a visual indicator below the last line if it ends with newline
+-- EOF indicator group and setup
+local eof_indicator_group = vim.api.nvim_create_augroup('EofIndicator', { clear = true })
+local eof_ns = vim.api.nvim_create_namespace("eof_indicator")
+
+-- Set up highlight for EOF indicator
 vim.api.nvim_create_autocmd("ColorScheme", {
+  group = eof_indicator_group,
   callback = function()
     vim.api.nvim_set_hl(0, "EofIndicator", { fg = "#526294" })
   end,
 })
-
--- Cache namespace creation outside autocmd
-local eof_ns = vim.api.nvim_create_namespace("eof_indicator")
 
 -- Shared function to draw EOF indicator
 local function draw_eof_indicator()
@@ -179,14 +181,16 @@ local function draw_eof_indicator()
   })
 end
 
--- Single autocmd for multiple events
+-- Draw indicator on various events
 vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPost", "BufWritePost", "TextChanged", "InsertLeave" }, {
+  group = eof_indicator_group,
   callback = draw_eof_indicator
 })
 
 -- Debounced resize handler
 local resize_timer = nil
 vim.api.nvim_create_autocmd("WinResized", {
+  group = eof_indicator_group,
   callback = function()
     if resize_timer then
       vim.fn.timer_stop(resize_timer)
@@ -197,6 +201,7 @@ vim.api.nvim_create_autocmd("WinResized", {
 
 -- Hide indicator when entering insert mode
 vim.api.nvim_create_autocmd("InsertEnter", {
+  group = eof_indicator_group,
   callback = function()
     vim.api.nvim_buf_clear_namespace(vim.api.nvim_get_current_buf(), eof_ns, 0, -1)
   end,
