@@ -150,13 +150,13 @@ return {
     require("mason").setup({})
     require("mason-tool-installer").setup({
       ensure_installed = {
-        "prettier",
         "html",
         "lua_ls",
         "rust_analyzer",
         "gopls",
         "typescript-language-server",
-        "eslint-lsp",
+        "eslint_d",
+        "prettier",
       }
     })
     require("mason-lspconfig").setup({
