@@ -2,6 +2,21 @@ return {
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
+  init = function()
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "VeryLazy",
+      callback = function()
+        -- Setup vim.ui overrides
+        _G.dd = function(...)
+          Snacks.debug.inspect(...)
+        end
+        _G.bt = function()
+          Snacks.debug.backtrace()
+        end
+        vim.print = _G.dd
+      end,
+    })
+  end,
 
   ---@type snacks.Config
   opts = {
@@ -12,8 +27,8 @@ return {
     -- dashboard = { enabled = true },
     -- explorer = { enabled = true },
     -- indent = { enabled = true },
-    -- input = { enabled = true },
-    -- picker = { enabled = true },
+    input = { enabled = true }, -- Required for avante.nvim
+    picker = { enabled = true }, -- Required for avante.nvim select
     -- notifier = { enabled = true },
     -- quickfile = { enabled = true },
     -- scope = { enabled = true },
